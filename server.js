@@ -6,16 +6,20 @@ const cors = require('cors');
 const { DB_URI } = require('./config/db');
 
 const app = express();
-const PORT = 'https://ecoprawnnodebe-ks53.vercel.app';
+const PORT = 3000;
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/api/users', userRoutes);
 
-mongoose.connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log('Error connecting to MongoDB:', err));
+mongoose.connect(DB_URI)
+    .then(() => {
+        console.log('MongoDB connected');
+    })
+    .catch(err => {
+        console.error('MongoDB connection error:', err);
+    });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
